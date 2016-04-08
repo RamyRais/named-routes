@@ -87,6 +87,7 @@ Router.prototype.add = function (method, path, callbacks, options) {
   if (this.routesByMethodAndPath[method][path] == undefined) {
     var route = new Route(path, options);
     route.__defineGetter__('name', function() {return this.options.name});
+    route.generateAjax = route.generate;
     if(this.expressMode) {
       route.generate = require("path-to-regexp").compile(path);
     }
@@ -118,6 +119,21 @@ Router.prototype.build = function (name, params, method) {
   var possibleRoutes = this.routesByNameAndMethod[name];
   method = method || Object.keys(possibleRoutes)[0];
   return possibleRoutes[method].generate(params);
+}
+
+/**
+ * Builds a URL based on the route name, method and parameters provided but accept null value 
+ *
+ * @param name
+ * @param params
+ * @param method
+ * @return {String}
+ */
+Router.prototype.buildAjaxRoute = function (name, params, method) {
+  if (this.routesByNameAndMethod[name] == undefined) throw new Error('No route found with the name:' + name);
+  var possibleRoutes = this.routesByNameAndMethod[name];
+  method = method || Object.keys(possibleRoutes)[0];
+  return possibleRoutes[method].generateAjax(params);
 }
 
 /**
