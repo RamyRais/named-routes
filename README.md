@@ -112,14 +112,14 @@ While forgetting to pass a parameter (or setting its value equal to ```undefined
 app.get('/todo/:user/:list/:id', 'todo.user.list.id', function(req, res, next){ .. }
 
 // this will build simply '/todo/foo':
-url('todo.user.list.id', {user: 'foo', list: null, id: null});
+urlAjax('todo.user.list.id', {user: 'foo', list: null, id: null});
 
 // useful for writing routes into ajax requests
-var getTodo = '!{url('todo.user.list.id', {user: 'foo', list: null, id: null})}';
+var getTodo = '!{urlAjax('todo.user.list.id', {user: 'foo', list: null, id: null})}';
 $http.get( getTodo + '/' + listID + '/' + id, function(){...})
 ```
 
-The above assumes you are working in an express view. If you are not, swap out ```url``` with  ```app.namedRoutes.build``` if you are in express but outside the view and ```app.get``` with ```router.add``` and ```url``` with ```router.build``` if you using module standalone.
+The above assumes you are working in an express view. If you are not, swap out ```url``` with  ```app.namedRoutes.buildAjaxRoute``` if you are in express but outside the view and ```app.get``` with ```router.add``` and ```url``` with ```router.buildAjaxRoute``` if you using module standalone.
 
 
 ## Features exclusive to stand-alone mode
