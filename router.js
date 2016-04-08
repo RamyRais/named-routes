@@ -147,9 +147,11 @@ Router.prototype.registerAppHelpers = function (app) {
   if (app.helpers) {
     var helpers = {};
     helpers[helperName] = function(name, params, method) { return self.build(name, params, method)};
+    helpers['urlAjax'] = function(name, params, method) { return self.buildAjaxRoute(name, params, method)};
     app.helpers(helpers);
   } else {
     app.locals[helperName] = function(name, params, method) { return self.build(name, params, method)};
+    helpers['urlAjax'] = function(name, params, method) { return self.buildAjaxRoute(name, params, method)};
   }
   return this;
 }
